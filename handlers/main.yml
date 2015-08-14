@@ -1,0 +1,6 @@
+# handlers file for autossh-tunnel-client
+---
+- name: restart autossh-tunnel-client
+  service:
+    name: autossh-tunnel-client
+    state: restarted

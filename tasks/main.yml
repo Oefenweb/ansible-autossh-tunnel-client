@@ -1,0 +1,63 @@
+# tasks file for autossh-tunnel-client
+---
+- name: install package
+  apt:
+    name: autossh
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+  tags: [configuration, autossh-tunnel-client, autossh-tunnel-client-install]
+
+- name: create required directories
+  file:
+    path: "{{ item.dest }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  with_items:
+    - dest: "{{ autossh_tunnel_client_configuration_directory }}"
+      mode: '0700'
+    - dest: "{{ autossh_tunnel_client_autossh_pidfile | dirname }}"
+      mode: '0755'
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-configuration
+    - autossh-tunnel-client-configuration-directories
+
+- name: copy key file(s)
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ autossh_tunnel_client_configuration_directory }}/{{ item.dest | default(item.src | basename) }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default(item.owner) | default('root') }}"
+    mode: "{{ item.mode | default('0600') }}"
+  with_items: autossh_tunnel_client_key_map
+  notify: restart autossh-tunnel-client
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-configuration
+    - autossh-tunnel-client-configuration-keys
+
+- name: create init script
+  template:
+    src: etc/init/autossh-tunnel-client.conf.j2
+    dest: /etc/init/autossh-tunnel-client.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart autossh-tunnel-client
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-configuration
+    - autossh-tunnel-client-configuration-init
+
+- name: start and enable service
+  service:
+    name: autossh-tunnel-client
+    state: started
+    enabled: yes
+  tags: [configuration, autossh-tunnel-client, autossh-tunnel-client-start-enable-service]

@@ -1,0 +1,18 @@
+# meta file for autossh-tunnel-client
+---
+galaxy_info:
+  author: Mischa ter Smitten
+  company: Oefenweb.nl B.V.
+  description: Set up a persistent tunnel (using autossh) in Ubuntu systems (client side)
+  license: MIT
+  min_ansible_version: 1.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - lucid
+        - precise
+        - trusty
+  categories:
+    - system
+    - networking
+dependencies: []

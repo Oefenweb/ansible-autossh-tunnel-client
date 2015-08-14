@@ -1,0 +1,20 @@
+# defaults file for autossh-tunnel-client
+---
+autossh_tunnel_client_autossh_debug: 1
+autossh_tunnel_client_autossh_first_poll: 30
+autossh_tunnel_client_autossh_gatetime: 0
+autossh_tunnel_client_autossh_loglevel: 7
+autossh_tunnel_client_autossh_pidfile: /var/run/autossh/autossh-tunnel-client.pid
+autossh_tunnel_client_autossh_poll: 60
+
+autossh_tunnel_client_key_map: []
+
+autossh_tunnel_client_port: 22
+autossh_tunnel_client_user: autossh
+autossh_tunnel_client_identity: id_rsa
+
+autossh_tunnel_client_ssh_options:
+ - 'ServerAliveInterval 60'
+ - 'ServerAliveCountMax 3'
+ - 'BatchMode=yes'
+ - 'StrictHostKeyChecking=no'

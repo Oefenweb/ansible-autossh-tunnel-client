@@ -1,0 +1,13 @@
+# test file for autossh-tunnel-client
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - ../../
+  vars:
+    autossh_tunnel_client_key_map:
+      - src: id_rsa
+        owner: travis
+    autossh_tunnel_client_host: localhost
+    autossh_tunnel_client_user: travis
+    autossh_tunnel_client_forward: '3307:127.0.0.1:3306'

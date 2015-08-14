@@ -1,0 +1,3 @@
+# vars file for autossh-tunnel-client
+---
+autossh_tunnel_client_configuration_directory: /etc/autossh
