@@ -6,7 +6,7 @@
     - ../../
   vars:
     autossh_tunnel_client_key_map:
-      - src: etc/autossh/id_rsa
+      - src: id_rsa
         owner: travis
     autossh_tunnel_client_host: localhost
     autossh_tunnel_client_user: travis
