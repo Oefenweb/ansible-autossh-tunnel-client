@@ -14,6 +14,8 @@ umask 022
 
 pre-start script
   test -x /usr/bin/autossh || { stop; exit 0; }
+
+  mkdir -p -m0755 {{ autossh_tunnel_client_autossh_pidfile | dirname }}
 end script
 
 script
