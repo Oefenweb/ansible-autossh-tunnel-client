@@ -5,7 +5,7 @@ galaxy_info:
   company: Oefenweb.nl B.V.
   description: Set up a persistent tunnel (using autossh) in Ubuntu systems (client side)
   license: MIT
-  min_ansible_version: 1.4
+  min_ansible_version: 1.6
   platforms:
     - name: Ubuntu
       versions:
