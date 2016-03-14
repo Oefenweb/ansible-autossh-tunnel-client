@@ -47,7 +47,7 @@ before_install:
   - sudo apt-get update -qq
 
   # Remove autossh
-  - sudo apt-get remove --purge autossh
+  - sudo apt-get remove --purge --yes autossh
 
   # Generate ssh key
   - ssh-keygen -t rsa -b 2048 -C '' -P '' -f files/id_rsa -q
