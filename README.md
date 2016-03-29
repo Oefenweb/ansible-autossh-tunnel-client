@@ -31,7 +31,7 @@ None
 
 * `autossh_tunnel_client_ssh_options`: [default: `['ServerAliveInterval 60', 'ServerAliveCountMax 3', 'BatchMode=yes', 'StrictHostKeyChecking=no']`]: SSH options
 
-* `autossh_tunnel_client_forward`: [required]: Port forward to set up (e.g. `'3307:127.0.0.1:3306'`)
+* `autossh_tunnel_client_forward`: [required]: Port forward to set up (e.g. `['3307:127.0.0.1:3306']`)
 
 ## Dependencies
 
@@ -54,7 +54,7 @@ None
     autossh_tunnel_client_key_map:
       - src: ../../../files/autossh-tunnel-client/etc/autossh/id_rsa
     autossh_tunnel_client_host: 'example.com'
-    autossh_tunnel_client_forward: '3307:127.0.0.1:3306'
+    autossh_tunnel_client_forward: '[3307:127.0.0.1:3306]'
 ```
 
 You will be able to connect to mysql using:
