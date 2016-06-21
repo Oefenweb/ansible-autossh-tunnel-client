@@ -6,7 +6,10 @@
     state: latest
     update_cache: true
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
-  tags: [configuration, autossh-tunnel-client, autossh-tunnel-client-install]
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-install
 
 - name: create required directories
   file:
@@ -33,7 +36,7 @@
     owner: "{{ item.owner | default('root') }}"
     group: "{{ item.group | default(item.owner) | default('root') }}"
     mode: "{{ item.mode | default('0600') }}"
-  with_items: autossh_tunnel_client_key_map
+  with_items: "{{ autossh_tunnel_client_key_map }}"
   notify: restart autossh-tunnel-client
   tags:
     - configuration
@@ -60,4 +63,7 @@
     name: autossh-tunnel-client
     state: started
     enabled: true
-  tags: [configuration, autossh-tunnel-client, autossh-tunnel-client-start-enable-service]
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-start-enable-service
