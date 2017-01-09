@@ -4,3 +4,4 @@ autossh_tunnel_client_dependencies:
   - autossh
 
 autossh_tunnel_client_configuration_directory: /etc/autossh
+autossh_tunnel_client_install_prefix: /usr/bin

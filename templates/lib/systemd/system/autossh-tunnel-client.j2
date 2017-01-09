@@ -1,0 +1,26 @@
+; {{ ansible_managed }}
+
+[Unit]
+Description=Set up a persistent tunnel (using autossh)
+After=network.target
+
+[Service]
+Type=simple
+Environment=AUTOSSH_DEBUG={{ autossh_tunnel_client_autossh_debug }}
+Environment=AUTOSSH_FIRST_POLL={{ autossh_tunnel_client_autossh_first_poll }}
+Environment=AUTOSSH_GATETIME={{ autossh_tunnel_client_autossh_gatetime }}
+Environment=AUTOSSH_LOGLEVEL={{ autossh_tunnel_client_autossh_loglevel }}
+Environment=AUTOSSH_PIDFILE={{ autossh_tunnel_client_autossh_pidfile }}
+Environment=AUTOSSH_POLL={{ autossh_tunnel_client_autossh_poll }}
+ExecStartPre=/usr/bin/test -x {{ autossh_tunnel_client_install_prefix }}/autossh
+ExecStartPre=/usr/bin/install -d -m 0755 {{ autossh_tunnel_client_autossh_pidfile | dirname }}
+ExecStart={{ autossh_tunnel_client_install_prefix }}/autossh -M 0 -4 -N {% for forward in autossh_tunnel_client_forward %}-L {{ forward }} {% endfor %}{{ autossh_tunnel_client_user }}@{{ autossh_tunnel_client_host }} \
+  -p {{ autossh_tunnel_client_port }} \
+  -i {{ autossh_tunnel_client_configuration_directory }}/{{ autossh_tunnel_client_identity }} \
+{% for ssh_options in autossh_tunnel_client_ssh_options %}
+  -o "{{ ssh_options }}" \
+{% endfor %}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

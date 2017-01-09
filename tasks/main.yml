@@ -45,19 +45,21 @@
     - autossh-tunnel-client-configuration
     - autossh-tunnel-client-configuration-keys
 
-- name: create init script
-  template:
-    src: etc/init/autossh-tunnel-client.conf.j2
-    dest: /etc/init/autossh-tunnel-client.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart autossh-tunnel-client
+- include: service-upstart.yml
+  when: ansible_distribution_version | version_compare('15.04', '<')
   tags:
     - configuration
     - autossh-tunnel-client
-    - autossh-tunnel-client-configuration
-    - autossh-tunnel-client-configuration-init
+    - autossh-tunnel-client-service
+    - autossh-tunnel-client-service-upstart
+
+- include: service-systemd.yml
+  when: ansible_distribution_version | version_compare('15.04', '>=')
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-service
+    - autossh-tunnel-client-service-systemd
 
 - name: start and enable service
   service:
