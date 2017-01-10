@@ -5,8 +5,12 @@
 description "Set up a persistent tunnel (using autossh)"
 author      "Mischa ter Smitten"
 
-start on net-device-up IFACE!=lo
+start on net-device-up
 stop on runlevel [01S6]
+
+respawn
+respawn limit unlimited
+umask 022
 
 pre-start script
   /usr/bin/test -x {{ autossh_tunnel_client_install_prefix }}/autossh || { stop; exit 0; }
