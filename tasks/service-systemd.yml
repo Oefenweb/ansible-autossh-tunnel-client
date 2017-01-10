@@ -1,0 +1,19 @@
+# tasks file for autossh-tunnel-client
+---
+- name: service | systemd | update script
+  template:
+    src: templates/lib/systemd/system/autossh-tunnel-client.j2
+    dest: /lib/systemd/system/autossh-tunnel-client.service
+    owner: root
+    group: root
+    mode: 0644
+  register: _update_systemd_script
+  notify: restart autossh-tunnel-client
+  tags:
+    - autossh-tunnel-client-service-systemd-update
+
+- name: service | systemd | reload
+  command: systemctl daemon-reload
+  when: _update_systemd_script | changed
+  tags:
+    - autossh-tunnel-client-service-systemd-reload

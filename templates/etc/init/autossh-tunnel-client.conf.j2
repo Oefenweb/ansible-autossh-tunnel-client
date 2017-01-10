@@ -5,17 +5,16 @@
 description "Set up a persistent tunnel (using autossh)"
 author      "Mischa ter Smitten"
 
-start on net-device-up IFACE=eth0
+start on net-device-up
 stop on runlevel [01S6]
 
 respawn
-respawn limit 5 60 # Respawn max 5 times in 60 seconds
+respawn limit unlimited
 umask 022
 
 pre-start script
-  test -x /usr/bin/autossh || { stop; exit 0; }
-
-  mkdir -p -m0755 {{ autossh_tunnel_client_autossh_pidfile | dirname }}
+  /usr/bin/test -x {{ autossh_tunnel_client_install_prefix }}/autossh || { stop; exit 0; }
+  /usr/bin/install -d -m 0755 {{ autossh_tunnel_client_autossh_pidfile | dirname }}
 end script
 
 script
@@ -26,7 +25,7 @@ script
   export AUTOSSH_PIDFILE={{ autossh_tunnel_client_autossh_pidfile }}
   export AUTOSSH_POLL={{ autossh_tunnel_client_autossh_poll }}
 
-  autossh -M 0 -4 -N {% for forward in autossh_tunnel_client_forward %}-L {{ forward }} {% endfor %}{{ autossh_tunnel_client_user }}@{{ autossh_tunnel_client_host }} \
+  {{ autossh_tunnel_client_install_prefix }}/autossh -M 0 -4 -N {% for forward in autossh_tunnel_client_forward %}-L {{ forward }} {% endfor %}{{ autossh_tunnel_client_user }}@{{ autossh_tunnel_client_host }} \
     -p {{ autossh_tunnel_client_port }} \
     -i {{ autossh_tunnel_client_configuration_directory }}/{{ autossh_tunnel_client_identity }} \
 {% for ssh_options in autossh_tunnel_client_ssh_options %}
