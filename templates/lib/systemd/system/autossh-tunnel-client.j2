@@ -20,6 +20,7 @@ ExecStart={{ autossh_tunnel_client_install_prefix }}/autossh -M 0 -4 -N {% for f
 {% for ssh_options in autossh_tunnel_client_ssh_options %}
   -o "{{ ssh_options }}" \
 {% endfor %}
+
 Restart=always
 
 [Install]
