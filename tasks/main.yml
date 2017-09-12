@@ -46,7 +46,7 @@
     - autossh-tunnel-client-configuration-keys
 
 - include: service-upstart.yml
-  when: ansible_distribution_version | version_compare('15.04', '<')
+  when: ansible_service_mgr != 'systemd'
   tags:
     - configuration
     - autossh-tunnel-client
@@ -54,7 +54,7 @@
     - autossh-tunnel-client-service-upstart
 
 - include: service-systemd.yml
-  when: ansible_distribution_version | version_compare('15.04', '>=')
+  when: ansible_service_mgr == 'systemd'
   tags:
     - configuration
     - autossh-tunnel-client
