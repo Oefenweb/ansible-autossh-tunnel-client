@@ -1,5 +1,13 @@
 # tasks file for autossh-tunnel-client
 ---
+- name: facts | set
+  set_fact:
+     is_docker_guest: "{{ ansible_virtualization_role | default('host') == 'guest' and ansible_virtualization_type | default('none') == 'docker' }}"
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-facts
+
 - name: install package
   apt:
     name: "{{ item }}"
@@ -12,54 +20,36 @@
     - autossh-tunnel-client
     - autossh-tunnel-client-install
 
-- name: create required directories
-  file:
-    path: "{{ item.dest }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "{{ item.mode }}"
-  with_items:
-    - dest: "{{ autossh_tunnel_client_configuration_directory }}"
-      mode: '0700'
-    - dest: "{{ autossh_tunnel_client_autossh_pidfile | dirname }}"
-      mode: '0755'
+- include: configure.yml
   tags:
     - configuration
     - autossh-tunnel-client
-    - autossh-tunnel-client-configuration
-    - autossh-tunnel-client-configuration-directories
+    - autossh-tunnel-client-configure
 
-- name: copy key file(s)
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ autossh_tunnel_client_configuration_directory }}/{{ item.dest | default(item.src | basename) }}"
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default(item.owner) | default('root') }}"
-    mode: "{{ item.mode | default('0600') }}"
-  with_items: "{{ autossh_tunnel_client_key_map }}"
-  notify: restart autossh-tunnel-client
-  tags:
-    - configuration
-    - autossh-tunnel-client
-    - autossh-tunnel-client-configuration
-    - autossh-tunnel-client-configuration-keys
-
-- include: service-upstart.yml
-  when: ansible_service_mgr != 'systemd'
+- block:
+    - include: service-initd.yml
+  when: is_docker_guest
   tags:
     - configuration
     - autossh-tunnel-client
     - autossh-tunnel-client-service
-    - autossh-tunnel-client-service-upstart
+    - autossh-tunnel-client-service-initd
 
-- include: service-systemd.yml
-  when: ansible_service_mgr == 'systemd'
+- block:
+    - include: service-upstart.yml
+      when: ansible_service_mgr != 'systemd'
+      tags:
+        - autossh-tunnel-client-service-upstart
+
+    - include: service-systemd.yml
+      when: ansible_service_mgr == 'systemd'
+      tags:
+        - autossh-tunnel-client-service-systemd
+  when: not is_docker_guest
   tags:
     - configuration
     - autossh-tunnel-client
     - autossh-tunnel-client-service
-    - autossh-tunnel-client-service-systemd
 
 - name: start and enable service
   service:

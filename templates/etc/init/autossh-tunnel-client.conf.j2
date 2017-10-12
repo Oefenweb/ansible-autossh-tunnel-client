@@ -13,23 +13,15 @@ respawn limit unlimited
 umask 022
 
 pre-start script
-  /usr/bin/test -x {{ autossh_tunnel_client_install_prefix }}/autossh || { stop; exit 0; }
+  /usr/bin/test -x {{ autossh_tunnel_client_install_prefix }}/autossh
   /usr/bin/install -d -m 0755 {{ autossh_tunnel_client_autossh_pidfile | dirname }}
 end script
 
 script
-  export AUTOSSH_DEBUG={{ autossh_tunnel_client_autossh_debug }}
-  export AUTOSSH_FIRST_POLL={{ autossh_tunnel_client_autossh_first_poll }}
-  export AUTOSSH_GATETIME={{ autossh_tunnel_client_autossh_gatetime }}
-  export AUTOSSH_LOGLEVEL={{ autossh_tunnel_client_autossh_loglevel }}
-  export AUTOSSH_PIDFILE={{ autossh_tunnel_client_autossh_pidfile }}
-  export AUTOSSH_POLL={{ autossh_tunnel_client_autossh_poll }}
+  set -a
+  [ -r /etc/default/autossh-tunnel-client ] && . /etc/default/autossh-tunnel-client
 
-  {{ autossh_tunnel_client_install_prefix }}/autossh -M 0 -4 -N {% for forward in autossh_tunnel_client_forward %}-L {{ forward }} {% endfor %}{{ autossh_tunnel_client_user }}@{{ autossh_tunnel_client_host }} \
-    -p {{ autossh_tunnel_client_port }} \
-    -i {{ autossh_tunnel_client_configuration_directory }}/{{ autossh_tunnel_client_identity }} \
-{% for ssh_options in autossh_tunnel_client_ssh_options %}
-    -o "{{ ssh_options }}" \
-{% endfor %}
+  {{ autossh_tunnel_client_install_prefix }}/autossh \
+    {% for autossh_options in autossh_tunnel_client_autossh_options %} -{{ autossh_options }}{% endfor %} {% for forward in autossh_tunnel_client_forward %}-L {{ forward }} {% endfor %}{{ autossh_tunnel_client_user }}@{{ autossh_tunnel_client_host }} -p {{ autossh_tunnel_client_port }} -i {{ autossh_tunnel_client_configuration_directory }}/{{ autossh_tunnel_client_identity }} {% for ssh_options in autossh_tunnel_client_ssh_options %}-o "{{ ssh_options }}" {% endfor %} \
   ;
 end script

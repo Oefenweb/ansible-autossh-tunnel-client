@@ -1,0 +1,12 @@
+# tasks file for autossh-tunnel-client
+---
+- name: service | initd | update script
+  template:
+    src: etc/init.d/autossh-tunnel-client.j2
+    dest: /etc/init.d/autossh-tunnel-client
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart autossh-tunnel-client
+  tags:
+    - autossh-tunnel-client-service-initd-update

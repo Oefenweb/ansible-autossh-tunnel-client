@@ -29,6 +29,7 @@ None
 * `autossh_tunnel_client_user`: [default: `autossh`]: Remote user for connection
 * `autossh_tunnel_client_identity`: [default: `id_rsa`]: Remote user for connection
 
+* `autossh_tunnel_client_autossh_options`: [default: `['M 0', '4', 'N']`]: Autossh options
 * `autossh_tunnel_client_ssh_options`: [default: `['ServerAliveInterval 60', 'ServerAliveCountMax 3', 'BatchMode=yes', 'StrictHostKeyChecking=no']`]: SSH options
 
 * `autossh_tunnel_client_forward`: [required]: Port forward to set up (e.g. `['3307:127.0.0.1:3306']`)

@@ -1,0 +1,46 @@
+# tasks file for autossh-tunnel-client
+---
+- name: configure | create directories
+  file:
+    path: "{{ item.dest }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  with_items:
+    - dest: "{{ autossh_tunnel_client_configuration_directory }}"
+      mode: '0700'
+    - dest: "{{ autossh_tunnel_client_autossh_pidfile | dirname }}"
+      mode: '0755'
+  tags:
+    - autossh-tunnel-client-configure-directories
+    - autossh-tunnel-client-configure-directories-create
+
+- name: configure | update configuration file(s)
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: etc/default/autossh-tunnel-client.j2
+      dest: /etc/default/autossh-tunnel-client
+  notify: restart autossh-tunnel-client
+  tags:
+    - autossh-tunnel-client-configure-configuration
+
+- name: configure | copy key file(s)
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ autossh_tunnel_client_configuration_directory }}/{{ item.dest | default(item.src | basename) }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default(item.owner) | default('root') }}"
+    mode: "{{ item.mode | default('0600') }}"
+  with_items: "{{ autossh_tunnel_client_key_map }}"
+  notify: restart autossh-tunnel-client
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-configuration
+    - autossh-tunnel-client-configuration-keys
