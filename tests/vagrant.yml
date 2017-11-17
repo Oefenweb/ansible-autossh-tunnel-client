@@ -5,10 +5,3 @@
   become: true
   roles:
     - ../../
-  vars:
-    autossh_tunnel_client_key_map:
-      - src: ../../../files/autossh-tunnel/etc/autossh/star-oefenweb-nl
-        dest: id_rsa
-    autossh_tunnel_client_host: 'db-mirror-02.oefenweb.nl'
-    autossh_tunnel_client_forward:
-      - '3306:127.0.0.1:3306'

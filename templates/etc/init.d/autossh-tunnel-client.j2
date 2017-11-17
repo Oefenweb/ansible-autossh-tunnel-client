@@ -15,16 +15,10 @@
 ### END INIT INFO
 
 NAME=autossh-tunnel-client
-DAEMON={{ autossh_tunnel_client_install_prefix }}/autossh-tunnel-client
+DAEMON={{ autossh_tunnel_client_install_prefix }}/autossh-tunnel-client-wrapper
 PIDFILE={{ autossh_tunnel_client_autossh_pidfile }}
 
 . /lib/lsb/init-functions
-
-set -a
-[ -r /etc/default/${NAME} ] && . /etc/default/${NAME}
-set +a
-
-/usr/bin/test -x ${DAEMON}
 
 case $1 in
  start)
@@ -40,7 +34,7 @@ case $1 in
   log_daemon_msg "Starting the process" "$NAME"
   # Start the daemon with the help of start-stop-daemon
   # Log the message appropriately
-  if start-stop-daemon --start --quiet --oknodo --background --pidfile $PIDFILE --exec {{ autossh_tunnel_client_install_prefix }}/autossh -- {% for autossh_options in autossh_tunnel_client_autossh_options %} -{{ autossh_options }}{% endfor %} {% for forward in autossh_tunnel_client_forward %}-L {{ forward }} {% endfor %}{{ autossh_tunnel_client_user }}@{{ autossh_tunnel_client_host }} -p {{ autossh_tunnel_client_port }} -i {{ autossh_tunnel_client_configuration_directory }}/{{ autossh_tunnel_client_identity }} {% for ssh_options in autossh_tunnel_client_ssh_options %}-o "{{ ssh_options }}" {% endfor %}; then
+  if start-stop-daemon --start --quiet --oknodo --background --pidfile $PIDFILE --exec $DAEMON; then
    log_end_msg 0
   else
    log_end_msg 1

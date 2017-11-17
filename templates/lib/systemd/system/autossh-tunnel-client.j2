@@ -6,16 +6,7 @@ After=network.target
 
 [Service]
 Type=simple
-EnvironmentFile=-/etc/default/autossh-tunnel-client
-ExecStartPre=/usr/bin/test -x {{ autossh_tunnel_client_install_prefix }}/autossh
-ExecStartPre=/usr/bin/install -d -m 0755 {{ autossh_tunnel_client_autossh_pidfile | dirname }}
-ExecStart={{ autossh_tunnel_client_install_prefix }}/autossh{% for autossh_options in autossh_tunnel_client_autossh_options %} -{{ autossh_options }}{% endfor %} {% for forward in autossh_tunnel_client_forward %}-L {{ forward }} {% endfor %}{{ autossh_tunnel_client_user }}@{{ autossh_tunnel_client_host }} \
-  -p {{ autossh_tunnel_client_port }} \
-  -i {{ autossh_tunnel_client_configuration_directory }}/{{ autossh_tunnel_client_identity }} \
-{% for ssh_options in autossh_tunnel_client_ssh_options %}
-  -o "{{ ssh_options }}" \
-{% endfor %}
-
+ExecStart={{ autossh_tunnel_client_install_prefix }}/autossh-tunnel-client-wrapper
 Restart=always
 
 [Install]
