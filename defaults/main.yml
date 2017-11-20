@@ -13,6 +13,10 @@ autossh_tunnel_client_port: 22
 autossh_tunnel_client_user: autossh
 autossh_tunnel_client_identity: id_rsa
 
+autossh_tunnel_client_autossh_options:
+ - 'M 0'
+ - 4
+ - N
 autossh_tunnel_client_ssh_options:
  - 'ServerAliveInterval 60'
  - 'ServerAliveCountMax 3'

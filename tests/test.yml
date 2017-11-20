@@ -3,12 +3,14 @@
 - hosts: localhost
   connection: local
   become: true
+  pre_tasks:
+    - include: pre.yml
   roles:
     - ../../
   vars:
     autossh_tunnel_client_key_map:
       - src: id_rsa
-        owner: travis
+        owner: "{{ ansible_user_id }}"
     autossh_tunnel_client_host: localhost
     autossh_tunnel_client_user: travis
     autossh_tunnel_client_forward:
