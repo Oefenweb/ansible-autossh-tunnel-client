@@ -2,8 +2,8 @@
 ---
 - name: service | systemd | update script
   template:
-    src: templates/lib/systemd/system/autossh-tunnel-client.j2
-    dest: /lib/systemd/system/autossh-tunnel-client.service
+    src: etc/systemd/system/autossh-tunnel-client.j2
+    dest: /etc/systemd/system/autossh-tunnel-client.service
     owner: root
     group: root
     mode: 0644
