@@ -10,11 +10,10 @@
 
 - name: install package
   apt:
-    name: "{{ item }}"
+    name: "{{ autossh_tunnel_client_dependencies }}"
     state: "{{ apt_install_state | default('latest') }}"
     update_cache: true
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
-  with_items: "{{ autossh_tunnel_client_dependencies }}"
   tags:
     - configuration
     - autossh-tunnel-client

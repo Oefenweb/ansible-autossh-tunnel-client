@@ -13,7 +13,8 @@
     - autossh-tunnel-client-service-systemd-update
 
 - name: service | systemd | reload
-  command: systemctl daemon-reload
+  systemd:
+    daemon_reload: true
   when: _update_systemd_script is changed
   tags:
     - autossh-tunnel-client-service-systemd-reload

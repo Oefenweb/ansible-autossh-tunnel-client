@@ -1,6 +1,7 @@
 # meta file for autossh-tunnel-client
 ---
 galaxy_info:
+  role_name: autossh-tunnel-client
   author: Mischa ter Smitten
   company: Oefenweb.nl B.V.
   description: Set up a persistent tunnel (using autossh) in Ubuntu systems (client side)
@@ -12,6 +13,7 @@ galaxy_info:
         - precise
         - trusty
         - xenial
+        - bionic
   galaxy_tags:
     - system
     - networking
