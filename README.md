@@ -33,6 +33,7 @@ None
 * `autossh_tunnel_client_ssh_options`: [default: `['ServerAliveInterval 60', 'ServerAliveCountMax 3', 'BatchMode=yes', 'StrictHostKeyChecking=no']`]: SSH options
 
 * `autossh_tunnel_client_forward`: [required]: Port forward to set up (e.g. `['3307:127.0.0.1:3306']`)
+* `autossh_tunnel_client_forward_direction`: [default: `L`]: Specifies the direction of the tunnel. If it is set to `R`, then the direction of the tunnel is reversed making it into a reverse ssh tunnel
 
 ## Dependencies
 
