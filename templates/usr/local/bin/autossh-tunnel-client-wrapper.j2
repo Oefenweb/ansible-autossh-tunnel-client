@@ -20,7 +20,7 @@ set +a;
 /usr/bin/install -d -m 0755 {{ autossh_tunnel_client_autossh_pidfile | dirname }};
 
 exec ${DAEMON}{% for autossh_options in autossh_tunnel_client_autossh_options %} -{{ autossh_options }}{% endfor %} \
-  {% for forward in autossh_tunnel_client_forward %}-L {{ forward }} {% endfor %}\
+  {% for forward in autossh_tunnel_client_forward %}-{{ autossh_tunnel_client_forward_direction }} {{ forward }} {% endfor %}\
   {{ autossh_tunnel_client_user }}@{{ autossh_tunnel_client_host }} \
   -p {{ autossh_tunnel_client_port }} \
   -i {{ autossh_tunnel_client_configuration_directory }}/{{ autossh_tunnel_client_identity }} \

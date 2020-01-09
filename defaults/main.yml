@@ -22,3 +22,5 @@ autossh_tunnel_client_ssh_options:
  - 'ServerAliveCountMax 3'
  - 'BatchMode=yes'
  - 'StrictHostKeyChecking=no'
+
+autossh_tunnel_client_forward_direction: L
