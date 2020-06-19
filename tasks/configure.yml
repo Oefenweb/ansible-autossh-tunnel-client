@@ -24,8 +24,8 @@
     group: root
     mode: "{{ item.mode }}"
   with_items:
-    - src: etc/default/autossh-tunnel-client.j2
-      dest: /etc/default/autossh-tunnel-client
+    - src: "{{ autossh_tunnel_client_etc_default_file.lstrip('/') }}.j2"
+      dest: "{{ autossh_tunnel_client_etc_default_file }}"
       mode: '0644'
     - src: "{{ autossh_tunnel_client_install_prefix.lstrip('/') }}/autossh-tunnel-client-wrapper.j2"
       dest: "{{ autossh_tunnel_client_install_prefix }}/autossh-tunnel-client-wrapper"

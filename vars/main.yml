@@ -5,3 +5,8 @@ autossh_tunnel_client_dependencies:
 
 autossh_tunnel_client_configuration_directory: /etc/autossh
 autossh_tunnel_client_install_prefix: /usr/local/bin
+
+autossh_tunnel_client_etc_default_file: /etc/default/autossh-tunnel-client
+autossh_tunnel_client_etc_init_d_file: /etc/init.d/autossh-tunnel-client
+autossh_tunnel_client_etc_systemd_file: /etc/systemd/system/autossh-tunnel-client.service
+autossh_tunnel_client_etc_init_file: /etc/init/autossh-tunnel-client.conf

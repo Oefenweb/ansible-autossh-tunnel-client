@@ -2,8 +2,8 @@
 ---
 - name: service | initd | update script
   template:
-    src: etc/init.d/autossh-tunnel-client.j2
-    dest: /etc/init.d/autossh-tunnel-client
+    src: "{{ autossh_tunnel_client_etc_init_d_file.lstrip('/') }}.j2"
+    dest: "{{ autossh_tunnel_client_etc_init_d_file }}"
     owner: root
     group: root
     mode: 0755
