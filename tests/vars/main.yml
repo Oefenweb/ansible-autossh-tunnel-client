@@ -1,0 +1,15 @@
+# vars file for autossh-tunnel-client
+---
+autossh_tunnel_client_key_map:
+  - src: "{{ autossh_tunnel_client_private_key_file }}"
+    remote_src: true
+autossh_tunnel_client_host: "{{ ansible_lo['ipv4']['address'] }}"
+autossh_tunnel_client_user: "{{ ansible_user_id }}"
+autossh_tunnel_client_forward:
+  - "{{ autossh_tunnel_client_tunneled_memcached_port }}:{{ ansible_lo['ipv4']['address'] }}:11211"
+
+autossh_tunnel_client_ssh_directory: "~{{ ansible_user_id }}/.ssh"
+autossh_tunnel_client_private_key_file: "{{ autossh_tunnel_client_ssh_directory }}/id_rsa"
+autossh_tunnel_client_public_key_file: "{{ autossh_tunnel_client_private_key_file }}.pub"
+autossh_tunnel_client_authorized_keys_file: "{{ autossh_tunnel_client_ssh_directory }}/authorized_keys"
+autossh_tunnel_client_tunneled_memcached_port: 11212

@@ -4,14 +4,12 @@
   connection: local
   become: true
   pre_tasks:
-    - include: pre.yml
+    - name: include vars
+      include_vars: "{{ playbook_dir }}/vars/main.yml"
+    - name: include tasks
+      include: "{{ playbook_dir }}/tasks/pre.yml"
   roles:
     - ../../
-  vars:
-    autossh_tunnel_client_key_map:
-      - src: id_rsa
-        owner: "{{ ansible_user_id }}"
-    autossh_tunnel_client_host: localhost
-    autossh_tunnel_client_user: travis
-    autossh_tunnel_client_forward:
-      - '3307:127.0.0.1:3306'
+#  post_tasks:
+#    - name: include tasks
+#      include: "{{ playbook_dir }}/tasks/post.yml"
