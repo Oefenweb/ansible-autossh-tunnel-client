@@ -1,0 +1,34 @@
+# pre test file for autossh-tunnel-client
+---
+- name: install dependencies
+  apt:
+    name:
+      - openssh-client
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+
+- name: add ssh directory
+  command: >
+    mkdir -p ~{{ ansible_user_id }}/.ssh
+  args:
+    creates: "~{{ ansible_user_id }}/.ssh"
+
+- name: generate key pair
+  command: >
+    ssh-keygen -t rsa -b 2048 -C '' -P '' -f ~{{ ansible_user_id }}/.ssh/id_rsa -q
+  args:
+    creates: "~{{ ansible_user_id }}/.ssh/id_rsa"
+
+- name: add public key
+  shell: >
+    cat ~{{ ansible_user_id }}/.ssh/id_rsa.pub > ~{{ ansible_user_id }}/.ssh/authorized_keys
+  args:
+    creates: "~{{ ansible_user_id }}/.ssh/authorized_keys"
+
+- name: install test service
+  apt:
+    name:
+      - openssh-server
+      - memcached
+    state: "{{ apt_install_state | default('latest') }}"

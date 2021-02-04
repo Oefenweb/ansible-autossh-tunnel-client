@@ -1,0 +1,9 @@
+# vars file for autossh-tunnel-client
+---
+autossh_tunnel_client_key_map:
+  - src: "~{{ ansible_user_id }}/.ssh/id_rsa"
+    remote_src: true
+autossh_tunnel_client_host: localhost
+autossh_tunnel_client_user: "{{ ansible_user_id }}"
+autossh_tunnel_client_forward:
+  - '11212:127.0.0.1:11211'
