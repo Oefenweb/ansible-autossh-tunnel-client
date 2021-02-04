@@ -3,8 +3,8 @@
 autossh_tunnel_client_key_map:
   - src: "~{{ ansible_user_id }}/.ssh/id_rsa"
     remote_src: true
-autossh_tunnel_client_host: localhost
+autossh_tunnel_client_host: "{{ ansible_lo['ipv4']['address'] }}"
 autossh_tunnel_client_user: "{{ ansible_user_id }}"
 autossh_tunnel_client_tunneled_memcached_port: 11212
 autossh_tunnel_client_forward:
-  - "{{ _autossh_tunnel_client_tunneled_memcached_port }}:{{ ansible_lo['ipv4']['address'] }}:11211"
+  - "{{ autossh_tunnel_client_tunneled_memcached_port }}:{{ ansible_lo['ipv4']['address'] }}:11211"
