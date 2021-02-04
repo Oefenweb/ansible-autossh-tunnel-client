@@ -37,7 +37,7 @@
 - name: configure | copy key file(s)
   copy:
     src: "{{ item.src }}"
-    remote_src: "{{ item.remote_src | default(false) }}"
+    remote_src: "{{ item.remote_src | default(omit) }}"
     dest: "{{ autossh_tunnel_client_configuration_directory }}/{{ item.dest | default(item.src | basename) }}"
     owner: "{{ item.owner | default('root') }}"
     group: "{{ item.group | default(item.owner) | default('root') }}"
