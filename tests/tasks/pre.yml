@@ -9,22 +9,24 @@
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
 
 - name: add ssh directory
-  command: >
-    mkdir -p ~{{ ansible_user_id }}/.ssh
-  args:
-    creates: "~{{ ansible_user_id }}/.ssh"
+  file:
+    path: "{{ autossh_tunnel_client_ssh_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
 
 - name: generate key pair
   command: >
-    ssh-keygen -t rsa -b 2048 -C '' -P '' -f ~{{ ansible_user_id }}/.ssh/id_rsa -q
+    ssh-keygen -t rsa -b 2048 -C '' -P '' -f {{ autossh_tunnel_client_private_key_file }} -q
   args:
-    creates: "~{{ ansible_user_id }}/.ssh/id_rsa"
+    creates: "{{ autossh_tunnel_client_private_key_file }}"
 
 - name: add public key
   shell: >
-    cat ~{{ ansible_user_id }}/.ssh/id_rsa.pub > ~{{ ansible_user_id }}/.ssh/authorized_keys
+    cat {{ autossh_tunnel_client_public_key_file }} > {{ autossh_tunnel_client_authorized_keys_file }}
   args:
-    creates: "~{{ ansible_user_id }}/.ssh/authorized_keys"
+    creates: "{{ autossh_tunnel_client_authorized_keys_file }}"
 
 - name: install test service
   apt:
