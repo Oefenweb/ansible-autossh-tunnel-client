@@ -1,4 +1,4 @@
-# test file for autossh-tunnel-client
+# test file
 ---
 - hosts: localhost
   connection: local

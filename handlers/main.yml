@@ -1,4 +1,4 @@
-# handlers file for autossh-tunnel-client
+# handlers file
 ---
 - name: restart autossh-tunnel-client
   service:

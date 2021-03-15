@@ -1,4 +1,4 @@
-# tasks file for autossh-tunnel-client
+# tasks file
 ---
 - name: service | upstart | update script
   template:

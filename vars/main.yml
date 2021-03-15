@@ -1,4 +1,4 @@
-# vars file for autossh-tunnel-client
+# vars file
 ---
 autossh_tunnel_client_dependencies:
   - autossh

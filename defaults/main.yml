@@ -1,4 +1,4 @@
-# defaults file for autossh-tunnel-client
+# defaults file
 ---
 autossh_tunnel_client_autossh_debug: 1
 autossh_tunnel_client_autossh_first_poll: 30

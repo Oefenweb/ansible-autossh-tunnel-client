@@ -1,4 +1,4 @@
-# pre test file for autossh-tunnel-client
+# pre test file
 ---
 - name: install dependencies
   apt:
