@@ -1,7 +1,7 @@
 ## autossh-tunnel-client
 
 [![CI](https://github.com/Oefenweb/ansible-autossh-tunnel-client/workflows/CI/badge.svg)](https://github.com/Oefenweb/ansible-autossh-tunnel-client/actions?query=workflow%3ACI)
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-autossh--tunnel--client-blue.svg)](https://galaxy.ansible.com/Oefenweb/autossh-tunnel-client)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-autossh--tunnel--client-blue.svg)](https://galaxy.ansible.com/Oefenweb/autossh_tunnel_client)
 
 Set up a persistent tunnel (using `autossh`) in Ubuntu systems (client side).
 
