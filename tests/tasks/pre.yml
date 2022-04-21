@@ -22,6 +22,12 @@
   args:
     creates: "{{ autossh_tunnel_client_private_key_file }}"
 
+- name: remove authorized_keys file (if empty)
+  shell: >
+    [ -s {{ autossh_tunnel_client_authorized_keys_file }} ] || rm -fv {{ autossh_tunnel_client_authorized_keys_file }}
+  register: _rm_fv
+  changed_when: _rm_fv.stdout_lines | length > 0
+
 - name: add public key
   shell: >
     cat {{ autossh_tunnel_client_public_key_file }} > {{ autossh_tunnel_client_authorized_keys_file }}
