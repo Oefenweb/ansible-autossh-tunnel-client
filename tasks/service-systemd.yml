@@ -12,7 +12,7 @@
   tags:
     - autossh-tunnel-client-service-systemd-update
 
-- name: service | systemd | reload
+- name: service | systemd | reload  # noqa no-handler
   ansible.builtin.systemd:
     daemon_reload: true
   when: _update_systemd_script is changed
