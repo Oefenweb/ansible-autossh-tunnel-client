@@ -25,7 +25,8 @@
     - autossh-tunnel-client
     - autossh-tunnel-client-configure
 
-- block:
+- name: service
+  block:
     - ansible.builtin.include: service-initd.yml
   when: is_docker_guest
   tags:
@@ -34,7 +35,8 @@
     - autossh-tunnel-client-service
     - autossh-tunnel-client-service-initd
 
-- block:
+- name: service
+  block:
     - ansible.builtin.include: service-upstart.yml
       when: ansible_service_mgr != 'systemd'
       tags:
