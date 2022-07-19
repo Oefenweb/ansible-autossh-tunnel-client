@@ -1,7 +1,7 @@
 # handlers file
 ---
 - name: restart autossh-tunnel-client
-  service:
+  ansible.builtin.service:
     name: autossh-tunnel-client
     state: restarted
   when: service_default_state | default('started') == 'started'

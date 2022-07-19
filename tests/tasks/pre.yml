@@ -1,7 +1,7 @@
 # pre test file
 ---
 - name: install dependencies
-  apt:
+  ansible.builtin.apt:
     name:
       - openssh-client
     state: "{{ apt_install_state | default('latest') }}"
@@ -9,7 +9,7 @@
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
 
 - name: add ssh directory
-  file:
+  ansible.builtin.file:
     path: "{{ autossh_tunnel_client_ssh_directory }}"
     state: directory
     owner: root
@@ -17,25 +17,25 @@
     mode: 0700
 
 - name: generate key pair
-  command: >
+  ansible.builtin.command: >
     ssh-keygen -t rsa -b 2048 -C '' -P '' -f {{ autossh_tunnel_client_private_key_file }} -q
   args:
     creates: "{{ autossh_tunnel_client_private_key_file }}"
 
 - name: remove authorized_keys file (if empty)
-  shell: >
+  ansible.builtin.shell: >
     [ -s {{ autossh_tunnel_client_authorized_keys_file }} ] || rm -fv {{ autossh_tunnel_client_authorized_keys_file }}
   register: _rm_fv
   changed_when: _rm_fv.stdout_lines | length > 0
 
 - name: add public key
-  shell: >
+  ansible.builtin.shell: >
     cat {{ autossh_tunnel_client_public_key_file }} > {{ autossh_tunnel_client_authorized_keys_file }}
   args:
     creates: "{{ autossh_tunnel_client_authorized_keys_file }}"
 
 - name: install test service
-  apt:
+  ansible.builtin.apt:
     name:
       - openssh-server
       - memcached

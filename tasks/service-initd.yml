@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: service | initd | update script
-  template:
+  ansible.builtin.template:
     src: "{{ autossh_tunnel_client_etc_init_d_file.lstrip('/') }}.j2"
     dest: "{{ autossh_tunnel_client_etc_init_d_file }}"
     owner: root
