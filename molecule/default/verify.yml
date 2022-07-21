@@ -2,10 +2,10 @@
 - name: Verify
   hosts: all
   become: true
-#  pre_tasks:
-#    - name: include vars
-#      include_vars: "{{ playbook_dir }}/../../tests/vars/main.yml"
+  # pre_tasks:
+  #   - name: include vars
+  #     ansible.builtin.include_vars: "{{ playbook_dir }}/../../tests/vars/main.yml"
   tasks: []
-#  post_tasks:
-#    - name: include tasks
-#      include: "{{ playbook_dir }}/../../tests/tasks/post.yml"
+  # post_tasks:
+  #   - name: include tasks
+  #     ansible.builtin.include: "{{ playbook_dir }}/../../tests/tasks/post.yml"

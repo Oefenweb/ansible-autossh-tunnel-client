@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: configure | create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item.dest }}"
     state: directory
     owner: root
@@ -17,7 +17,7 @@
     - autossh-tunnel-client-configure-directories-create
 
 - name: configure | update configuration file(s)
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -35,7 +35,7 @@
     - autossh-tunnel-client-configure-configuration
 
 - name: configure | copy key file(s)
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     remote_src: "{{ item.remote_src | default(omit) }}"
     dest: "{{ autossh_tunnel_client_configuration_directory }}/{{ item.dest | default(item.src | basename) }}"
