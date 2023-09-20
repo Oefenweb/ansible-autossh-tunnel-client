@@ -8,4 +8,4 @@
   tasks: []
   # post_tasks:
   #   - name: include tasks
-  #     ansible.builtin.include: "{{ playbook_dir }}/../../tests/tasks/post.yml"
+  #     ansible.builtin.import_tasks: "{{ playbook_dir }}/../../tests/tasks/post.yml"
