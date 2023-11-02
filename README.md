@@ -52,7 +52,7 @@ None
 ---
 - hosts: all
   roles:
-    - autossh-tunnel-client
+    - oefenweb.autossh-tunnel-client
   vars:
     autossh_tunnel_client_key_map:
       - src: ../../../files/autossh-tunnel-client/etc/autossh/id_rsa
