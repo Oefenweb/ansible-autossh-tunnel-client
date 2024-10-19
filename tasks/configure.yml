@@ -36,9 +36,11 @@
 
 - name: configure | copy key file(s)
   ansible.builtin.copy:
-    src: "{{ item.src }}"
+    src: "{{ item.src | default(omit) }}"
     remote_src: "{{ item.remote_src | default(omit) }}"
-    dest: "{{ autossh_tunnel_client_configuration_directory }}/{{ item.dest | default(item.src | basename) }}"
+    content: "{{ item.content | default(omit) }}"
+    # Even when `item.dest` is defined, the argument for the alternative default is evaluated so needs to not fail when `item.src` is not defined
+    dest: "{{ autossh_tunnel_client_configuration_directory }}/{{ item.dest | default(item.src | default('id_rsa') | basename) }}"
     owner: "{{ item.owner | default('root') }}"
     group: "{{ item.group | default(item.owner) | default('root') }}"
     mode: "{{ item.mode | default('0600') }}"
