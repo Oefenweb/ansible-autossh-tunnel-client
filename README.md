@@ -18,9 +18,10 @@ None
 * `autossh_tunnel_client_autossh_pidfile`: [default: `/var/run/autossh/autossh-tunnel-client.pid`]: Write pid to specified file
 * `autossh_tunnel_client_autossh_poll`: [default: `60`]: Specifies the connection poll time in seconds
 
-* `autossh_tunnel_client_key_map`: [default: `[]`]: SSH key declarations
+* `autossh_tunnel_client_key_map`: [default: `[]`]: SSH key declarations. Each requires either `src` or `content` to be set (mutually exclusive)
 * `autossh_tunnel_client_key_map.{n}.src`: [optional]: The path of the file to copy, can be absolute or relative (e.g. `../../../files/autossh-tunnel-client/etc/autossh/id_rsa`)
 * `autossh_tunnel_client_key_map.{n}.remote_src`: [optional, default `false`]: Whether the `src` is on the remote
+* `autossh_tunnel_client_key_map.{n}.content`: [optional]: The key content. Must be used with `dest`
 * `autossh_tunnel_client_key_map.{n}.dest`: [optional, default `src | basename`]: The remote path of the file to copy, relative to `/etc/autossh` (e.g. `id_rsa`)
 * `autossh_tunnel_client_key_map.{n}.owner`: [optional, default `root`]: The name of the user that should own the file
 * `autossh_tunnel_client_key_map.{n}.group`: [optional, default `owner`, `root`]: The name of the group that should own the file
