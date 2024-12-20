@@ -27,17 +27,22 @@
     - autossh-tunnel-client-configure
 
 - name: service
-  block:
-    - name: service-initd
-      ansible.builtin.import_tasks: service-initd.yml
   when: is_docker_guest
   tags:
     - configuration
     - autossh-tunnel-client
     - autossh-tunnel-client-service
     - autossh-tunnel-client-service-initd
+  block:
+    - name: service-initd
+      ansible.builtin.import_tasks: service-initd.yml
 
 - name: service
+  when: not is_docker_guest
+  tags:
+    - configuration
+    - autossh-tunnel-client
+    - autossh-tunnel-client-service
   block:
     - name: service upstart
       ansible.builtin.import_tasks: service-upstart.yml
@@ -50,17 +55,13 @@
       when: ansible_service_mgr == 'systemd'
       tags:
         - autossh-tunnel-client-service-systemd
-  when: not is_docker_guest
-  tags:
-    - configuration
-    - autossh-tunnel-client
-    - autossh-tunnel-client-service
 
 - name: start and enable service
   ansible.builtin.service:
     name: autossh-tunnel-client
     state: "{{ service_default_state | default('started') }}"
     enabled: "{{ service_default_enabled | default(true) | bool }}"
+    use: "{{ service_use_service_mgr | default(omit) }}"
   tags:
     - configuration
     - autossh-tunnel-client

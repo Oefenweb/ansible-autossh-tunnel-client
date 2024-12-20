@@ -4,4 +4,5 @@
   ansible.builtin.service:
     name: autossh-tunnel-client
     state: restarted
+    use: "{{ service_use_service_mgr | default(omit) }}"
   when: service_default_state | default('started') == 'started'

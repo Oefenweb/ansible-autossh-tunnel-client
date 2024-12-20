@@ -6,7 +6,7 @@
     dest: "{{ autossh_tunnel_client_etc_init_d_file }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
   notify: restart autossh-tunnel-client
   tags:
     - autossh-tunnel-client-service-initd-update
