@@ -61,6 +61,7 @@
     name: autossh-tunnel-client
     state: "{{ service_default_state | default('started') }}"
     enabled: "{{ service_default_enabled | default(true) | bool }}"
+    use: "{{ service_use_service_mgr | default(omit) }}"
   tags:
     - configuration
     - autossh-tunnel-client
