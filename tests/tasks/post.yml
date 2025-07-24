@@ -1,6 +1,6 @@
 # pre test file
 ---
-- name: install dependencies
+- name: post | install dependencies
   ansible.builtin.apt:
     name:
       - netcat-traditional
@@ -8,7 +8,7 @@
     update_cache: true
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
 
-- name: check tunneled service  # noqa risky-shell-pipe
+- name: post | check tunneled service  # noqa risky-shell-pipe
   ansible.builtin.shell: >
     echo stats | nc {{ ansible_lo['ipv4']['address'] }} {{ autossh_tunnel_client_tunneled_memcached_port }}
     | grep -q 'STAT'
