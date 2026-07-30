@@ -1,4 +1,4 @@
-; {{ ansible_managed }}
+{{ ansible_managed | comment(decoration='; ') }}
 
 [Unit]
 Description=Set up a persistent tunnel (using autossh)

@@ -2,7 +2,7 @@
 ---
 - name: facts | set
   ansible.builtin.set_fact:
-    is_docker_guest: "{{ ansible_virtualization_role | default('host') == 'guest' and ansible_virtualization_type | default('none') == 'docker' }}"
+    is_docker_guest: "{{ ansible_facts['virtualization_role'] | default('host') == 'guest' and ansible_virtualization_type | default('none') == 'docker' }}"
   tags:
     - configuration
     - autossh-tunnel-client
@@ -46,13 +46,13 @@
   block:
     - name: service upstart
       ansible.builtin.import_tasks: service-upstart.yml
-      when: ansible_service_mgr != 'systemd'
+      when: ansible_facts['service_mgr'] != 'systemd'
       tags:
         - autossh-tunnel-client-service-upstart
 
     - name: service systemd
       ansible.builtin.import_tasks: service-systemd.yml
-      when: ansible_service_mgr == 'systemd'
+      when: ansible_facts['service_mgr'] == 'systemd'
       tags:
         - autossh-tunnel-client-service-systemd
 

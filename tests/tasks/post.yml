@@ -10,7 +10,7 @@
 
 - name: post | check tunneled service  # noqa risky-shell-pipe
   ansible.builtin.shell: >
-    echo stats | nc {{ ansible_lo['ipv4']['address'] }} {{ autossh_tunnel_client_tunneled_memcached_port }}
+    echo stats | nc {{ ansible_facts['lo']['ipv4']['address'] }} {{ autossh_tunnel_client_tunneled_memcached_port }}
     | grep -q 'STAT'
     && (echo 'Availability test: pass' && exit 0)
     || (echo 'Availability test: fail' && exit 1)
