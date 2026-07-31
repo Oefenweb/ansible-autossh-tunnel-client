@@ -2,7 +2,7 @@
 ---
 - name: facts | set
   ansible.builtin.set_fact:
-    is_docker_guest: "{{ ansible_facts['virtualization_role'] | default('host') == 'guest' and ansible_virtualization_type | default('none') == 'docker' }}"
+    is_docker_guest: "{{ ansible_facts['virtualization_role'] | default('host') == 'guest' and ansible_facts['virtualization_type'] | default('none') == 'docker' }}"
   tags:
     - configuration
     - autossh-tunnel-client
